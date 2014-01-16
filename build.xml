@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+  =======================================================================
+  build file
+  1、清空临时目录
+  2、建立目录结构
+  3、从vss或cvs中获得源文件
+  4、编译（编译java源文件、copy属性文件和xml等文件、编码转换）
+  5、建立WAR包
+  6、发布
+  =======================================================================
+-->
+<project default="main" basedir=".">
+  <property name="file.war" value="TrafficTestServer.war"/>
+ 
+  <!--jdk 位置-->
+  <property name="dir.jdk" value="C:/Program Files (x86)/Java/jdk1.7.0_45"/>
+  <property name="dir.tomcat" value="D:/apache-tomcat-7.0.47"/>
+  <property name="dir.export" value="."/>
+ 
+  <property name="dir.jsp" value="WebContent"/>
+  <property name="dir.src" value="src"/>
+  <property name="dir.classes" value="build/classes"/>
+  <property name="dir.lib" value="WebContent/WEB-INF/lib"/>
+  <property name="dir.web" value="web"/>
+ 
+  <property name="vss.login" value="userId,password"/>
+  <property name="vss.serverPath" value="i:\"/>
+  <property name="vss.srcPath" value="/myproject/src"/>
+  <property name="vss.libPath" value="/myproject/lib"/>
+  <property name="vss.webPath" value="/myproject/webapp"/>
+ 
+  <property name="server.ftp.userId" value="ftpuser"/>
+  <property name="server.ftp.password" value="ftppassword"/>
+  <property name="server.ftp.serverIp" value="192.168.0.1"/>
+ 
+  <path id="project.class.path">
+    <pathelement location="${dir.classes}"/>
+    <pathelement location="${dir.jdk}/jre/lib/rt.jar"/>
+    <fileset dir="${dir.lib}">
+        <include name="**/*.jar"/>
+    </fileset>
+    <!-- tomcat 包 -->
+    <fileset file="D:/apache-tomcat-7.0.47/lib/*.jar" />
+  </path>
+ 
+  <target name="clean">
+    <delete dir="${dir.classes}"/>
+  </target>
+ 
+  <target name="compile" >
+      <javac bootclasspathref="project.class.path" debug="true" deprecation="true" destdir="${dir.classes}" nowarn="false"  source="1.5" target="1.5">
+        <src path="${dir.src}"/>
+      </javac>
+    
+      <copy todir="${dir.classes}">
+        <fileset dir="${dir.src}">
+          <include name="**/*.properties"/>
+          <include name="**/*.xml"/>
+          <exclude name="ApplicationResources.properties"/>
+        </fileset>
+      </copy>
+      <native2ascii encoding="utf-8" src="${dir.src}" dest="${dir.classes}" includes="ApplicationResources.properties"/>
+  </target>
+ 
+  <target name="build" depends="compile">
+      <war destfile="${file.war}" webxml="WebContent/WEB-INF/web.xml">
+        <lib dir="${dir.lib}"/>
+        <classes dir="${dir.classes}"/>
+        <fileset dir="${dir.jsp}">
+          <include name="*.jsp"/>
+        </fileset>
+      </war>
+  </target>
+ 
+  <target name="deploy" depends="build">
+      <!--
+      <ftp server="${server.ftp.serverIp}" userid="${server.ftp.userId}" password="${server.ftp.password}">
+        <fileset dir=".">
+          <include name="${file.war}"/>
+        </fileset>
+      </ftp>
+      -->
+      <copy todir="${dir.tomcat}/webapps" overwrite="true" >
+        <fileset dir="${dir.export}">
+          <include name="${file.war}"/>
+        </fileset>
+      </copy>
+  </target>
+ 
+  <target name="main" description="" depends="deploy"/>
+</project>
