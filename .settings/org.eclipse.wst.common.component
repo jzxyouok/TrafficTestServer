@@ -2,6 +2,7 @@
     <wb-module deploy-name="TrafficTestServer">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/source"/>
         <property name="context-root" value="TrafficTestServer"/>
         <property name="java-output-path" value="/TrafficTestServer/build/classes"/>
     </wb-module>
