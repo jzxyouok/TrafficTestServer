@@ -5,10 +5,11 @@
 <!-- 指定Struts 2配置文件的根元素 -->
 <struts>
 	<!-- 所有的Action定义都应该放在package下 -->
-	<package name="com.xulingjue.traffictestserver.servlet" extends="struts-default">
-		<action name="login" class="com.xulingjue.traffictestserver.servlet.QuestionAddAction">
-			<!-- 定义三个逻辑视图和物理资源之间的映射 -->		
-			<result name="Question/add">/add.jsp</result>
+	<package name="TrafficTestServer" extends="struts-default" namespace="/Question">
+		<action name="add" class="com.xulingjue.traffictestserver.servlet.QuestionAddAction">		
+			<result name="input">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="success">/addQuestion.jsp</result>
 		</action>
 	</package>
 </struts>
