@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf8"
-	pageEncoding="utf8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -60,22 +60,24 @@
 			<p class="lead">在此页面增加新的驾校考试题目</p>
 		</div>
 		<div class="well">
-			<form role="form">
+			<form role="form" action="<%=request.getContextPath()%>/Question/add" method="post" enctype="multipart/form-data" >
 				<input type="hidden" name="act" value="dosave"/>
 				<div class="form-group">
-					<label for="exampleInputEmail1">题目内容</label>
-					<textarea class="form-control" placeholder="请输入题目内容" id="exampleInputEmail1" rows="3"></textarea>
+					<label>题目内容</label>
+					<textarea class="form-control" placeholder="请输入题目内容" name="title" rows="3"></textarea>
 				</div>
 				
 				<div class="form-group">
-					<label for="exampleInputFile">题目图片</label> <input type="file" id="exampleInputFile">
+					<label>题目图片</label><input type="file" name="upload">
 				</div>
 				
+				<!-- 
 				<div class="form-group">
-					<label for="exampleInputOption1">选项</label>&nbsp;  &nbsp;  <input type="checkbox" value=""> 正确 <input
-						type="text" class="form-control"
+					<label>选项</label>&nbsp;&nbsp;<input type="checkbox" name="isRight" value="0"> 正确 <input
+						type="text" name="option" class="form-control"
 						placeholder="选项内容">
 				</div>
+				-->
 				
 				<div class="form-group">
 					<button type="submit" id="addOptionBtn" class="btn btn btn-default btn-xs">增加选项</button>
@@ -102,14 +104,24 @@
 $(document).ready(function(){
 	$("#addOptionBtn").click(function(){
 		//增加新选项
-		$("#addOptionBtn").parent().before(
-				"<div class=\"form-group\">\
-					<label for=\"exampleInputOption1\">选项</label>&nbsp;  &nbsp;  <input type=\"checkbox\" value=\"\"> 正确 <input\
-					type=\"text\" class=\"form-control\"\
-					placeholder=\"选项内容\">\
-				</div>"
-			);
+		var optionItem = $("<div class=\"form-group\">\
+				<label for=\"exampleInputOption1\">选项</label>&nbsp;&nbsp;<input type=\"checkbox\" name=\"isRightCheck\"> <input type=\"hidden\" name=\"isRight\" value=\"0\" > 正确  <span class=\"glyphicon glyphicon-remove\"></span><input\
+				type=\"text\" name=\"option\" class=\"form-control\"\
+				placeholder=\"选项内容\">\
+			</div>");
 		
+		optionItem.click(function(){
+			if(optionItem.find("[name='isRightCheck']").prop("checked")==true){
+				optionItem.find("input[name='isRight']").val("1");
+			}
+		});
+		
+		optionItem.find(".glyphicon-remove").click(function(){
+			optionItem.remove();
+		});
+		
+		$("#addOptionBtn").parent().before(optionItem);
+		return false;
 	});
 })
 

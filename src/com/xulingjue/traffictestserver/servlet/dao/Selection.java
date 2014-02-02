@@ -1,26 +1,40 @@
 package com.xulingjue.traffictestserver.servlet.dao;
 
 public class Selection {
-	private String content;
 	private int id;
-	private String tag;
-	
+	private int questionId;
+	private String content;
+	private int isRight;
+
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getTag() {
-		return tag;
+
+	public int getIsRight() {
+		return isRight;
 	}
-	public void setTag(String tag) {
-		this.tag = tag;
+
+	public void setIsRight(int isRight) {
+		this.isRight = isRight;
 	}
 }

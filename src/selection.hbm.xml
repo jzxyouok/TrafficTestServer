@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping
+	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xulingjue.traffictestserver.servlet.dao">
+	<class name="Selection">
+		<!-- 映射标识属性 -->
+		<id name="id" column="selectionid">
+			<!-- 指定主键生成器策略 -->
+			<generator class="increment"/>
+		</id>
+		<!-- 选项内容 -->
+		<property name="content" column="content" type="string"/>
+		<!-- 映射是否正确答案 -->
+		<property name="isRight" column="isright" type="int"/>
+		<!-- 
+		<property name="questionId" column="questionid" type="int"/>
+		 -->
+	</class>
+</hibernate-mapping>

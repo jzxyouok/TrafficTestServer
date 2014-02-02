@@ -1,28 +1,42 @@
 package com.xulingjue.traffictestserver.servlet.dao;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public class Question {
+	private int id;
 	private String content;
-	private ArrayList<Selection> selections;
-	private Selection answer;
-	
+	private String img;
+	private Set<Selection> selections;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public Set<Selection> getSelections() {
+		return selections;
+	}
+
+	public void setSelections(Set<Selection> selections) {
+		this.selections = selections;
+	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public ArrayList<Selection> getSelections() {
-		return selections;
-	}
-	public void setSelections(ArrayList<Selection> selections) {
-		this.selections = selections;
-	}
-	public Selection getAnswer() {
-		return answer;
-	}
-	public void setAnswer(Selection answer) {
-		this.answer = answer;
 	}
 }
