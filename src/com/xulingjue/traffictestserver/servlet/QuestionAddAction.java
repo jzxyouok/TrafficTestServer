@@ -18,6 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.xulingjue.traffictestserver.servlet.dao.Question;
 import com.xulingjue.traffictestserver.servlet.dao.QuestionDAO;
 import com.xulingjue.traffictestserver.servlet.dao.Selection;
+import com.xulingjue.traffictestserver.servlet.dao.SelectionDAO;
 
 public class QuestionAddAction extends ActionSupport {
 	private String act;
@@ -29,7 +30,12 @@ public class QuestionAddAction extends ActionSupport {
 	private String savePath;
 	private String isRight[];
 	private QuestionDAO questionDAO;
+	private SelectionDAO selectionDAO;
 	
+	public void setSelectionDAO(SelectionDAO selectionDAO) {
+		this.selectionDAO = selectionDAO;
+	}
+
 	public void setQuestionDAO(QuestionDAO questionDAO) {
 		this.questionDAO = questionDAO;
 	}
@@ -86,7 +92,6 @@ public class QuestionAddAction extends ActionSupport {
 		// 从配置文件中取出
 		return ServletActionContext.getServletContext().getRealPath(
 				"WEB-INF/" + savePath);
-		//return savePath;
 	}
 
 	public void setSavePath(String savePath) {
@@ -103,7 +108,7 @@ public class QuestionAddAction extends ActionSupport {
 
 	// 处理action请求
 	public String execute() {
-		questionDAO.add();
+	
 		if (act == null || act.trim().equals("")) {
 			return "showForm";
 		}
@@ -111,7 +116,7 @@ public class QuestionAddAction extends ActionSupport {
 		
 		/*
 		 * 插入数据库部分
-		 */
+		 
 		// 实例化Configuration，这行代码默认加载hibernate.cfg.xml文件
 		Configuration conf = new Configuration().configure();
 		// 以Configuration创建SessionFactory
@@ -120,7 +125,7 @@ public class QuestionAddAction extends ActionSupport {
 		Session sess = sf.openSession();
 		// 开始事务
 		Transaction tx = sess.beginTransaction();
-
+*/
 		HashSet selections = new HashSet();
 		// 读取选项部分
 		if (option != null) {
@@ -132,7 +137,7 @@ public class QuestionAddAction extends ActionSupport {
 			}
 
 		}
-
+	
 		Question q = new Question();
 		q.setContent(title);
 		q.setSelections(selections);
@@ -142,19 +147,14 @@ public class QuestionAddAction extends ActionSupport {
 		}else{
 			q.setImg("");
 		}
-		sess.save(q);
+		
+		questionDAO.add(q);
 
 		// 批量保存
 		Iterator selectionsIter = selections.iterator();
 		while (selectionsIter.hasNext()) {
-			sess.save((Selection) selectionsIter.next());
+			selectionDAO.add((Selection)selectionsIter.next());
 		}
-
-		// 提交事务
-		tx.commit();
-		// 关闭Session
-		sess.close();
-
 		return SUCCESS;
 	}
 

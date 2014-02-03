@@ -4,27 +4,25 @@
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 <!-- 指定Struts 2配置文件的根元素 -->
 <struts>
+	<!-- 设置浏览器是否缓存静态内容，默认值为true，开发阶段最好false 生产模式最好设置true -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<!-- 开发模式下设为true，这样可以打印出更详细的错误信息 生产模式设置false--> 
+
 	<!-- 上传临时文件夹 -->
 	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
-
 	<!-- 指定Web应用的默认编码集，相当于调用HttpServletRequest的setCharacterEncoding方法 -->
 	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!-- 将对象托管交给spring处理 -->
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 该属性设置是否每次HTTP请求到达时，系统都重新加载资源文件。开发阶段设置true 生产模式设置false -->
 	<constant name="struts.i18n.reload" value="true" />
-
 	<!--该属性设置当struts.xml文件改变后，系统是否自动重新加载该文件。该属性的默认值是false。 开发阶段最好true 生产模式设置false -->
 	<constant name="struts.configuration.xml.reload" value="true" />
-
-	<!--对于某些Java EE服务器，不支持HttpServlet Request调用getParameterMap()方法，此时可以设置该属性值为true来解决该问题。该属性的默认值是false。 
-		对于WebLogic、Orion和OC4J服务器，通常应该设置该属性为true。 -->
+	<!--对于某些Java EE服务器，不支持HttpServlet Request调用getParameterMap()方法，此时可以设置该属性值为true来解决该问题。该属性的默认值是false。 对于WebLogic、Orion和OC4J服务器，通常应该设置该属性为true。 -->
 	<constant name="struts.dispatcher.parametersWorkaround" value="true" />
-
-	<!-- 设置浏览器是否缓存静态内容，默认值为true，开发阶段最好false 生产模式最好设置true -->
-	<constant name="struts.serve.static.browserCache" value="false" />
-
-	<!-- 开发模式下设为true，这样可以打印出更详细的错误信息 生产模式设置false <constant name="struts.devMode" 
-		value="true" /> -->
+	
+	
+	<constant name="struts.devMode" value="true" /> 
 	<!-- 所有的Action定义都应该放在package下 -->
 	<package name="TrafficTestServer" extends="struts-default"
 		namespace="/Question">

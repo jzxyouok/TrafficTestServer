@@ -7,8 +7,9 @@ public class SelectionDAOHibernate extends HibernateDaoSupport implements
 		SelectionDAO {
 
 	@Override
-	public void add() {
-
+	public int add(Selection selection) {
+		return (Integer)getHibernateTemplate()
+				.save(selection);
 	}
 
 }

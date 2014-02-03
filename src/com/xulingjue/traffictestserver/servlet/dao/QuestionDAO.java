@@ -1,5 +1,6 @@
 package com.xulingjue.traffictestserver.servlet.dao;
 
 public interface QuestionDAO {
-	public void add();
+	int add(Question question);
+	void del(Question question);
 }
