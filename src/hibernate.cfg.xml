@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 采用spring整合hibernate方式实现dao层，此配置文件目前未用  -->
 <!-- 指定Hibernate配置文件的DTD信息 -->
 <!DOCTYPE hibernate-configuration PUBLIC
 	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"

@@ -35,6 +35,8 @@
 				<!-- 以下用来列出Hibernate映射文件 -->
 				<value>question.hbm.xml</value>
 				<value>selection.hbm.xml</value>
+				<value>address.hbm.xml</value>
+				<value>person.hbm.xml</value>
 			</list>
 		</property>
 		<!-- 定义Hibernate的SessionFactory的属性 -->
@@ -63,10 +65,19 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
+	<bean id="personDAO" class="com.xulingjue.traffictestserver.servlet.dao.PersonDAOHibernate">
+		<!-- 注入持久化操作所需的SessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
 	<!-- struts2 action -->
 	<bean id="questionAddAction" class="com.xulingjue.traffictestserver.servlet.QuestionAddAction" scope="prototype">
 		<property name="questionDAO" ref="questionDAO"/>
+		<property name="selectionDAO" ref="selectionDAO"/>
 	</bean>
 	
+	<bean id="questionListAction" class="com.xulingjue.traffictestserver.servlet.QuestionListAction" scope="prototype">
+		<property name="personDAO" ref="personDAO"/>
+	</bean>
 	
 </beans>

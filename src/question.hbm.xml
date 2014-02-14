@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.xulingjue.traffictestserver.servlet.dao">
-	<class name="Question">
+	<class name="Question" table="question">
 		<!-- 映射标识属性 -->
 		<id name="id" column="questionid">
 			<!-- 指定主键生成器策略 -->
@@ -17,7 +17,7 @@
 		<!-- 映射数组属性 -->
 		<set name="selections" table="selection">
 			<!-- 映射集合属性数据表的外键列 -->
-			<key column="questionid" not-null="true"/>
+			<key column="questionid"/>
 			<one-to-many class="com.xulingjue.traffictestserver.servlet.dao.Selection"/>  
 		</set>
 	</class>

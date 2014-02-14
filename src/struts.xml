@@ -7,6 +7,7 @@
 	<!-- 设置浏览器是否缓存静态内容，默认值为true，开发阶段最好false 生产模式最好设置true -->
 	<constant name="struts.serve.static.browserCache" value="false" />
 	<!-- 开发模式下设为true，这样可以打印出更详细的错误信息 生产模式设置false--> 
+	<constant name="struts.devMode" value="false" />
 
 	<!-- 上传临时文件夹 -->
 	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
@@ -22,11 +23,18 @@
 	<constant name="struts.dispatcher.parametersWorkaround" value="true" />
 	
 	
-	<constant name="struts.devMode" value="true" /> 
+	 
 	<!-- 所有的Action定义都应该放在package下 -->
 	<package name="TrafficTestServer" extends="struts-default"
 		namespace="/Question">
 		<action name="add" class="questionAddAction">
+			<param name="savePath">/upload</param>
+			<result name="showForm">/addQuestion.jsp</result>
+			<result name="success">/addQuestion.jsp</result>
+			<result name="error">/addQuestion.jsp</result>
+		</action>
+		
+		<action name="list" class="questionListAction">
 			<param name="savePath">/upload</param>
 			<result name="showForm">/addQuestion.jsp</result>
 			<result name="success">/addQuestion.jsp</result>

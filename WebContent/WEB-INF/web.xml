@@ -9,6 +9,11 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
+	<!-- 指定spring配置文件位置  -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
 	
 	<filter>
 		<filter-name>struts2</filter-name>

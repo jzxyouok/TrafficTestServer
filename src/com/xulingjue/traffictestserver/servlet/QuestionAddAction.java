@@ -114,18 +114,6 @@ public class QuestionAddAction extends ActionSupport {
 		}
 
 		
-		/*
-		 * 插入数据库部分
-		 
-		// 实例化Configuration，这行代码默认加载hibernate.cfg.xml文件
-		Configuration conf = new Configuration().configure();
-		// 以Configuration创建SessionFactory
-		SessionFactory sf = conf.buildSessionFactory();
-		// 实例化Session
-		Session sess = sf.openSession();
-		// 开始事务
-		Transaction tx = sess.beginTransaction();
-*/
 		HashSet selections = new HashSet();
 		// 读取选项部分
 		if (option != null) {
@@ -136,6 +124,12 @@ public class QuestionAddAction extends ActionSupport {
 				selections.add(s);
 			}
 
+		}
+		
+		// 批量保存
+		Iterator selectionsIter = selections.iterator();
+		while (selectionsIter.hasNext()) {
+			selectionDAO.add((Selection)selectionsIter.next());
 		}
 	
 		Question q = new Question();
@@ -150,11 +144,7 @@ public class QuestionAddAction extends ActionSupport {
 		
 		questionDAO.add(q);
 
-		// 批量保存
-		Iterator selectionsIter = selections.iterator();
-		while (selectionsIter.hasNext()) {
-			selectionDAO.add((Selection)selectionsIter.next());
-		}
+	
 		return SUCCESS;
 	}
 
