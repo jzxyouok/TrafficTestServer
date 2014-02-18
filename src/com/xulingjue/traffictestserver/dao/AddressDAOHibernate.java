@@ -1,6 +1,8 @@
-package com.xulingjue.traffictestserver.servlet.dao;
+package com.xulingjue.traffictestserver.dao;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import com.xulingjue.traffictestserver.pojo.Address;
 
 public class AddressDAOHibernate  extends HibernateDaoSupport implements AddressDAO {
 

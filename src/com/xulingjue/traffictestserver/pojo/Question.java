@@ -1,4 +1,4 @@
-package com.xulingjue.traffictestserver.servlet.dao;
+package com.xulingjue.traffictestserver.pojo;
 
 import java.util.Set;
 

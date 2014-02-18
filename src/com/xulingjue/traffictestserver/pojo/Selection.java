@@ -1,4 +1,4 @@
-package com.xulingjue.traffictestserver.servlet.dao;
+package com.xulingjue.traffictestserver.pojo;
 
 public class Selection {
 	private int id;

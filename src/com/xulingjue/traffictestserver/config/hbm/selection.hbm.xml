@@ -3,7 +3,7 @@
 	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.xulingjue.traffictestserver.servlet.dao">
+<hibernate-mapping package="com.xulingjue.traffictestserver.pojo">
 	<class name="Selection" table="selection">
 		<!-- 映射标识属性 -->
 		<id name="id" column="selectionid">

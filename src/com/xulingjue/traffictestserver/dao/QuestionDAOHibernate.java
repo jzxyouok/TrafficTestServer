@@ -1,6 +1,7 @@
-package com.xulingjue.traffictestserver.servlet.dao;
+package com.xulingjue.traffictestserver.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -8,6 +9,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+
+import com.xulingjue.traffictestserver.pojo.Question;
+import com.xulingjue.traffictestserver.pojo.Selection;
 
 public class QuestionDAOHibernate extends HibernateDaoSupport implements
 		QuestionDAO {
@@ -30,5 +34,11 @@ public class QuestionDAOHibernate extends HibernateDaoSupport implements
 				return null;
 			}
 		});
+	}
+
+	@Override
+	public ArrayList findBySelection(Selection selection) {
+		ArrayList personList = (ArrayList) getHibernateTemplate().find("select q from Question q left join q.selections s where s.id = 6");
+		return personList;
 	}
 }

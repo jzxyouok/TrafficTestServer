@@ -23,22 +23,46 @@
 	<constant name="struts.dispatcher.parametersWorkaround" value="true" />
 	
 	
-	 
+	
+		
 	<!-- 所有的Action定义都应该放在package下 -->
-	<package name="TrafficTestServer" extends="struts-default"
-		namespace="/Question">
+	<package name="TrafficTestServer" extends="struts-default" namespace="/Question">
+		<interceptors>
+			<!-- action拦截器   -->
+			<interceptor name="loginFilter" class="com.xulingjue.traffictestserver.filter.LoginFilter"/>
+			<!-- 方法拦截器 -->
+			<interceptor name="methodFilter" class="com.xulingjue.traffictestserver.filter.MethodFilter"/>
+			
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginFilter" />
+				<interceptor-ref name="methodFilter" >
+					<param name="excludeMethods">execute</param>
+					<param name="includeMethods">test</param><!-- 此处method方法要和action中配置method名称一致    -->
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+	
 		<action name="add" class="questionAddAction">
 			<param name="savePath">/upload</param>
 			<result name="showForm">/addQuestion.jsp</result>
 			<result name="success">/addQuestion.jsp</result>
-			<result name="error">/addQuestion.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		
-		<action name="list" class="questionListAction">
+		<action name="list" class="questionListAction"  method="test">
 			<param name="savePath">/upload</param>
 			<result name="showForm">/addQuestion.jsp</result>
 			<result name="success">/addQuestion.jsp</result>
-			<result name="error">/addQuestion.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="listAjax" class="questionListAction" method="ajax">
+			<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputStream">result</param>
+			</result>
 		</action>
 	</package>
 </struts>

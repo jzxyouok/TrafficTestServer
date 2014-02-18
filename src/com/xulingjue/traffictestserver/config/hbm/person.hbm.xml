@@ -3,14 +3,16 @@
 	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.xulingjue.traffictestserver.servlet.dao">
-	<class name="Address" table="address">
+<hibernate-mapping package="com.xulingjue.traffictestserver.pojo">
+	<class name="Person" table="person">
 		<!-- 映射标识属性 -->
-		<id name="id" column="addressid">
+		<id name="id" column="personid">
 			<!-- 指定主键生成器策略 -->
 			<generator class="increment"/>
 		</id>
 		<!-- 人物名称 -->
-		<property name="detail" column="detail" type="string"/>
+		<property name="name" column="name" type="string"/>
+		<!--  N-1 关联实体   -->
+		<many-to-one name="address" cascade="all" lazy="no-proxy" class="Address" column="addressid"></many-to-one>
 	</class>
 </hibernate-mapping>

@@ -3,7 +3,7 @@
 	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.xulingjue.traffictestserver.servlet.dao">
+<hibernate-mapping package="com.xulingjue.traffictestserver.pojo">
 	<class name="Question" table="question">
 		<!-- 映射标识属性 -->
 		<id name="id" column="questionid">
@@ -18,7 +18,7 @@
 		<set name="selections" table="selection">
 			<!-- 映射集合属性数据表的外键列 -->
 			<key column="questionid"/>
-			<one-to-many class="com.xulingjue.traffictestserver.servlet.dao.Selection"/>  
+			<one-to-many class="com.xulingjue.traffictestserver.pojo.Selection"/>  
 		</set>
 	</class>
 </hibernate-mapping>

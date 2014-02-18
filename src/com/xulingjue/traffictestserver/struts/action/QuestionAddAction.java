@@ -1,4 +1,4 @@
-package com.xulingjue.traffictestserver.servlet;
+package com.xulingjue.traffictestserver.struts.action;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,16 +9,19 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+
+
+
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.xulingjue.traffictestserver.servlet.dao.Question;
-import com.xulingjue.traffictestserver.servlet.dao.QuestionDAO;
-import com.xulingjue.traffictestserver.servlet.dao.Selection;
-import com.xulingjue.traffictestserver.servlet.dao.SelectionDAO;
+import com.xulingjue.traffictestserver.dao.QuestionDAO;
+import com.xulingjue.traffictestserver.dao.SelectionDAO;
+import com.xulingjue.traffictestserver.pojo.Question;
+import com.xulingjue.traffictestserver.pojo.Selection;
 
 public class QuestionAddAction extends ActionSupport {
 	private String act;
