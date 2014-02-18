@@ -46,16 +46,16 @@
 	
 		<action name="add" class="questionAddAction">
 			<param name="savePath">/upload</param>
-			<result name="showForm">/addQuestion.jsp</result>
-			<result name="success">/addQuestion.jsp</result>
-			<result name="error">/error.jsp</result>
+			<result name="showForm">/jsp/addQuestion.jsp</result>
+			<result name="success">/jsp/addQuestion.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
 		</action>
 		
 		<action name="list" class="questionListAction"  method="test">
 			<param name="savePath">/upload</param>
-			<result name="showForm">/addQuestion.jsp</result>
-			<result name="success">/addQuestion.jsp</result>
-			<result name="error">/error.jsp</result>
+			<result name="showForm">/jsp/addQuestion.jsp</result>
+			<result name="success">/jsp/addQuestion.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
 		</action>
 		
 		<action name="listAjax" class="questionListAction" method="ajax">
