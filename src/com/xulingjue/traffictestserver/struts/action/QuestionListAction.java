@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 
 
+
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.xulingjue.traffictestserver.dao.PersonDAO;
 import com.xulingjue.traffictestserver.dao.PersonDAOHibernate;
@@ -20,11 +22,13 @@ import com.xulingjue.traffictestserver.dao.QuestionDAO;
 import com.xulingjue.traffictestserver.pojo.Address;
 import com.xulingjue.traffictestserver.pojo.Person;
 import com.xulingjue.traffictestserver.pojo.Question;
+import com.xulingjue.traffictestserver.service.PersonManager;
 
 public class QuestionListAction extends ActionSupport {
 	private PersonDAO personDAO;
 	private QuestionDAO questionDAO;
 	private InputStream inputStream;
+	private PersonManager personManager;
 
 	public InputStream getInputStream() {
 		return inputStream;
@@ -37,8 +41,12 @@ public class QuestionListAction extends ActionSupport {
 	public void setQuestionDAO(QuestionDAO questionDAO) {
 		this.questionDAO = questionDAO;
 	}
-
-
+	
+	public void setPersonManager(PersonManager personManager) {
+		this.personManager = personManager;
+	}
+	
+	
 
 	// 处理action请求   执行ajax方法时也会执行该方法
 	public String test() {
@@ -98,6 +106,8 @@ public class QuestionListAction extends ActionSupport {
 	 */
 	public String ajax(){
 		try {
+			personManager.add(0, "", "");
+			
 			inputStream = new ByteArrayInputStream("ajax run success".getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			

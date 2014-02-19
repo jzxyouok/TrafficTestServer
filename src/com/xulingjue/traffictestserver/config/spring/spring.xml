@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
-	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <!-- Spring 3.0 配置文件的根元素 -->
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<context:component-scan base-package="lee">
+		<context:include-filter type="annotation"
+			expression="org.aspectj.lang.annotation.Aspect"/>
+	</context:component-scan>
+	<aop:aspectj-autoproxy/>
 
 	<!-- 定义数据源Bean，使用C3P0数据源实现 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -73,6 +86,29 @@
 		<!-- 注入持久化操作所需的SessionFactory -->
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<!-- 定义Service Bean -->
+	<bean id="personManager"
+		class="com.xulingjue.traffictestserver.service.PersonManagerImpl">
+	</bean>
+
+
+	<!-- 切面bean -->
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Manager</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>WelcomeAdvice</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="WelcomeAdvice" class="com.xulingjue.traffictestserver.aop.LogAspect"></bean>
+
 
 	<!-- struts2 action -->
 	<bean id="questionAddAction"
@@ -87,5 +123,7 @@
 		scope="prototype">
 		<property name="questionDAO" ref="questionDAO" />
 		<property name="personDAO" ref="personDAO" />
+		<property name="personManager" ref="personManager" />
 	</bean>
+	
 </beans>
