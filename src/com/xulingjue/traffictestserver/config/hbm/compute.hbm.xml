@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping
+	PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xulingjue.traffictestserver.pojo">
+	<class name="Compute" table="compute">
+		<!-- 映射标识属性 -->
+		<id name="id" column="computeid">
+			<!-- 指定主键生成器策略 -->
+			<generator class="increment"/>
+		</id>
+		<!-- 人物名称 -->
+		<property name="total" column="total" type="int"/>
+	</class>
+</hibernate-mapping>

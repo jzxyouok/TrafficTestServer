@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Spring 3.0 配置文件的根元素 -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-2.5.xsd
-	http://www.springframework.org/schema/aop
-	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
 	
 	<context:component-scan base-package="lee">
 		<context:include-filter type="annotation"
@@ -68,6 +72,33 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- 该类实现HibernateTransactionManager接口，是针对采用数据源连接的特定实现-->
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<!-- 配置DataSourceTransactionManager时需要依注入DataSource的引用 -->
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 配置事务切面Bean,指定事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 用于配置详细的事务语义 -->
+		<tx:attributes>
+			<!-- 其他方法使用默认的事务设置 -->
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 配置一个切入点，匹配lee包下所有以Impl结尾的类
+			执行的所有方法 -->
+		<aop:pointcut id="leeService"
+			expression="execution(* com.xulingjue.traffictestserver.service.*Impl.*(..))"/>
+		<!-- 指定在txAdvice切入点应用txAdvice事务切面 -->
+		<aop:advisor advice-ref="txAdvice" 
+			pointcut-ref="leeService"/>
+	</aop:config>
+	
 	<!-- 定义DAO Bean -->
 	<bean id="questionDAO"
 		class="com.xulingjue.traffictestserver.dao.QuestionDAOHibernate">
@@ -87,9 +118,16 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="computeDAO"
+		class="com.xulingjue.traffictestserver.dao.ComputeDAOHibernate">
+		<!-- 注入持久化操作所需的SessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<!-- 定义Service Bean -->
 	<bean id="personManager"
 		class="com.xulingjue.traffictestserver.service.PersonManagerImpl">
+		<property name="computeDAO" ref="computeDAO" />
 	</bean>
 
 
