@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 	http://www.springframework.org/schema/tx 
@@ -14,12 +12,12 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	
+
 	<context:component-scan base-package="lee">
 		<context:include-filter type="annotation"
-			expression="org.aspectj.lang.annotation.Aspect"/>
+			expression="org.aspectj.lang.annotation.Aspect" />
 	</context:component-scan>
-	<aop:aspectj-autoproxy/>
+	<aop:aspectj-autoproxy />
 
 	<!-- 定义数据源Bean，使用C3P0数据源实现 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -47,22 +45,24 @@
 		scope="singleton">
 		<!-- 依赖注入数据源，注入正是上面定义的dataSource -->
 		<property name="dataSource" ref="dataSource" />
-	
-		
-		<!-- mappingLocations属性  自定义路径时用 -->
+
+
+		<!-- mappingLocations属性 自定义路径时用 -->
 		<property name="mappingLocations">
 			<list>
 				<!-- 以下用来列出Hibernate映射文件 -->
-				<value>classpath:com/xulingjue/traffictestserver/config/hbm/*.hbm.xml </value>
+				<value>classpath:com/xulingjue/traffictestserver/config/hbm/*.hbm.xml
+				</value>
 			</list>
 		</property>
-		
+
 		<!-- 定义Hibernate的SessionFactory的属性 -->
 		<property name="hibernateProperties">
 			<props>
 				<!-- 指定数据库方言 -->
 				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQLInnoDBDialect</prop>
+					org.hibernate.dialect.MySQLInnoDBDialect
+				</prop>
 				<!-- 是否根据需要每次自动创建数据库 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<!-- 显示Hibernate持久化操作所生成的SQL -->
@@ -72,33 +72,31 @@
 			</props>
 		</property>
 	</bean>
-	
-	<!-- 该类实现HibernateTransactionManager接口，是针对采用数据源连接的特定实现-->
-	<bean id="transactionManager" 
+
+	<!-- 该类实现HibernateTransactionManager接口，是针对采用数据源连接的特定实现 -->
+	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<!-- 配置DataSourceTransactionManager时需要依注入DataSource的引用 -->
-		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
+
 	<!-- 配置事务切面Bean,指定事务管理器 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<!-- 用于配置详细的事务语义 -->
 		<tx:attributes>
 			<!-- 其他方法使用默认的事务设置 -->
-			<tx:method name="*"/>
+			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
 
 	<aop:config>
-		<!-- 配置一个切入点，匹配lee包下所有以Impl结尾的类
-			执行的所有方法 -->
+		<!-- 配置一个切入点，匹配lee包下所有以Impl结尾的类 执行的所有方法 -->
 		<aop:pointcut id="leeService"
-			expression="execution(* com.xulingjue.traffictestserver.service.*Impl.*(..))"/>
+			expression="execution(* com.xulingjue.traffictestserver.service.*Impl.*(..))" />
 		<!-- 指定在txAdvice切入点应用txAdvice事务切面 -->
-		<aop:advisor advice-ref="txAdvice" 
-			pointcut-ref="leeService"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="leeService" />
 	</aop:config>
-	
+
 	<!-- 定义DAO Bean -->
 	<bean id="questionDAO"
 		class="com.xulingjue.traffictestserver.dao.QuestionDAOHibernate">
@@ -112,18 +110,16 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="personDAO"
-		class="com.xulingjue.traffictestserver.dao.PersonDAOHibernate">
+	<bean id="personDAO" class="com.xulingjue.traffictestserver.dao.PersonDAOHibernate">
 		<!-- 注入持久化操作所需的SessionFactory -->
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
-	<bean id="computeDAO"
-		class="com.xulingjue.traffictestserver.dao.ComputeDAOHibernate">
+
+	<bean id="computeDAO" class="com.xulingjue.traffictestserver.dao.ComputeDAOHibernate">
 		<!-- 注入持久化操作所需的SessionFactory -->
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
+
 	<!-- 定义Service Bean -->
 	<bean id="personManager"
 		class="com.xulingjue.traffictestserver.service.PersonManagerImpl">
@@ -132,7 +128,8 @@
 
 
 	<!-- 切面bean -->
-	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
 		<property name="beanNames">
 			<list>
 				<value>*Manager</value>
@@ -144,7 +141,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="WelcomeAdvice" class="com.xulingjue.traffictestserver.aop.LogAspect"></bean>
 
 
@@ -163,5 +160,32 @@
 		<property name="personDAO" ref="personDAO" />
 		<property name="personManager" ref="personManager" />
 	</bean>
+
+
+
+
+
+	<!-- 配置定时任务 -->
+	<bean id="SchedulerTask3" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass">
+			<value>com.xulingjue.traffictestserver.quartz.OrderNoRefact</value>
+		</property>
+	</bean>
+
+	<!-- 配置定时时间 -->
+	<bean id="SchedulerTaskTrigger3" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="SchedulerTask3" />
+		<property name="cronExpression">
+			<value>0 0/1 0/1 * * ?</value>
+		</property>
+	</bean>
 	
+	<!-- 开启定时任务 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="SchedulerTaskTrigger3" />
+			</list>
+		</property>
+	</bean>
 </beans>
